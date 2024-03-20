@@ -3,6 +3,7 @@
 #pragma once
 
 #include "CoreMinimal.h"
+#include "Buffs/BuffDescriptor.h"
 #include "GameFramework/Actor.h"
 #include "BuffSystemDemoProjectile.generated.h"
 
@@ -25,6 +26,8 @@ class ABuffSystemDemoProjectile : public AActor
 public:
 	ABuffSystemDemoProjectile();
 
+	void SetBuffDescriptor(const FBuffDescriptor &InBuffDescriptor);
+
 	/** called when projectile hits something */
 	UFUNCTION()
 	void OnHit(UPrimitiveComponent* HitComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, FVector NormalImpulse, const FHitResult& Hit);
@@ -33,5 +36,12 @@ public:
 	USphereComponent* GetCollisionComp() const { return CollisionComp; }
 	/** Returns ProjectileMovement subobject **/
 	UProjectileMovementComponent* GetProjectileMovement() const { return ProjectileMovement; }
+
+private:	
+	UPROPERTY(BlueprintReadWrite, EditAnywhere, meta = (AllowPrivateAccess = true));
+	float ExplosionRadius = 50.f;
+
+	UPROPERTY()
+	FBuffDescriptor BuffDescriptor;
 };
 

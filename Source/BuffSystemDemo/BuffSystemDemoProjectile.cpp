@@ -1,8 +1,13 @@
 // Copyright Epic Games, Inc. All Rights Reserved.
 
 #include "BuffSystemDemoProjectile.h"
+
+#include "BuffSystemDemoCharacter.h"
 #include "GameFramework/ProjectileMovementComponent.h"
 #include "Components/SphereComponent.h"
+#include "GameFramework/Character.h"
+#include "Kismet/KismetSystemLibrary.h"
+#include "TP_ThirdPerson/TP_ThirdPersonCharacter.h"
 
 ABuffSystemDemoProjectile::ABuffSystemDemoProjectile() 
 {
@@ -31,13 +36,29 @@ ABuffSystemDemoProjectile::ABuffSystemDemoProjectile()
 	InitialLifeSpan = 3.0f;
 }
 
+void ABuffSystemDemoProjectile::SetBuffDescriptor(const FBuffDescriptor &InBuffDescriptor)
+{
+	BuffDescriptor = InBuffDescriptor;
+}
+
 void ABuffSystemDemoProjectile::OnHit(UPrimitiveComponent* HitComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, FVector NormalImpulse, const FHitResult& Hit)
 {
-	// Only add impulse and destroy projectile if we hit a physics
-	if ((OtherActor != nullptr) && (OtherActor != this) && (OtherComp != nullptr) && OtherComp->IsSimulatingPhysics())
-	{
-		OtherComp->AddImpulseAtLocation(GetVelocity() * 100.0f, GetActorLocation());
+	TArray<TEnumAsByte<EObjectTypeQuery>> ObjectTypes;
+	ObjectTypes.Add(UEngineTypes::ConvertToObjectType(ECollisionChannel::ECC_Pawn));
 
-		Destroy();
+	TArray<AActor *> OutActors;
+	UKismetSystemLibrary::SphereOverlapActors(GetWorld(), Hit.Location, ExplosionRadius, ObjectTypes, ACharacter::StaticClass(), TArray<AActor*>(), OutActors); 
+
+	DrawDebugSphere(GetWorld(), Hit.Location, ExplosionRadius, 12, FColor::Red, false, 10.0f);
+
+	for (AActor *DamagedCharacter : OutActors)
+	{
+		DrawDebugSphere(GetWorld(), DamagedCharacter->GetActorLocation(), 100, 12, FColor::Blue, false, 10.0f);
+		if (auto EnemyCharacter = Cast<ATP_ThirdPersonCharacter>(DamagedCharacter))
+		{
+			EnemyCharacter->ApplyBuff(BuffDescriptor);
+		}
 	}
+
+	Destroy();
 }

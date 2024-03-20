@@ -4,6 +4,7 @@
 #include "TP_WeaponComponent.h"
 #include "BuffSystemDemoCharacter.h"
 #include "BuffSystemDemoProjectile.h"
+#include "Buffs/BuffDescriptor.h"
 #include "GameFramework/PlayerController.h"
 #include "Camera/PlayerCameraManager.h"
 #include "Kismet/GameplayStatics.h"
@@ -24,16 +25,20 @@ void UTP_WeaponComponent::Fire(EBulletType BulletType)
 	}
 
 	TSubclassOf<class ABuffSystemDemoProjectile> ProjectileClass;
+	FString BuffRowName;
 	switch (BulletType)
 	{
-	case BulletType_Burst:
+	case EBulletType::BulletType_Burst:
 		ProjectileClass = Projectile1Class;
+		BuffRowName = "Burst";
 		break;
-	case BulletType_Damage:
+	case EBulletType::BulletType_Damage:
 		ProjectileClass = Projectile2Class;
+		BuffRowName = "Damage";
 		break;
-	case BulletType_Slow:
+	case EBulletType::BulletType_Slow:
 		ProjectileClass = Projectile3Class;
+		BuffRowName = "Slow";
 		break;
 	default: ;
 	}
@@ -53,7 +58,17 @@ void UTP_WeaponComponent::Fire(EBulletType BulletType)
 			ActorSpawnParams.SpawnCollisionHandlingOverride = ESpawnActorCollisionHandlingMethod::AdjustIfPossibleButDontSpawnIfColliding;
 	
 			// Spawn the projectile at the muzzle
-			World->SpawnActor<ABuffSystemDemoProjectile>(ProjectileClass, SpawnLocation, SpawnRotation, ActorSpawnParams);
+			ABuffSystemDemoProjectile *Projectile =
+				Cast<ABuffSystemDemoProjectile>(World->SpawnActor<ABuffSystemDemoProjectile>(ProjectileClass, SpawnLocation, SpawnRotation, ActorSpawnParams));
+
+			if (BuffsDataTable)
+			{
+				if (const FBuffDescriptor *BuffDescriptor =
+					BuffsDataTable->FindRow<FBuffDescriptor>(FName(*BuffRowName), TEXT("UTP_WeaponComponent::Fire"), false))
+				{
+					Projectile->SetBuffDescriptor(*BuffDescriptor);
+				}
+			}
 		}
 	}
 	

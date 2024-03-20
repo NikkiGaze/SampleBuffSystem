@@ -78,17 +78,17 @@ void ABuffSystemDemoCharacter::SetupPlayerInputComponent(class UInputComponent* 
 
 void ABuffSystemDemoCharacter::OnShoot1()
 {
-	OnUseItem.Broadcast(BulletType_Burst);
+	OnUseItem.Broadcast(EBulletType::BulletType_Burst);
 }
 
 void ABuffSystemDemoCharacter::OnShoot3()
 {
-	OnUseItem.Broadcast(BulletType_Damage);
+	OnUseItem.Broadcast(EBulletType::BulletType_Damage);
 }
 
 void ABuffSystemDemoCharacter::OnShoot2()
 {
-	OnUseItem.Broadcast(BulletType_Slow);
+	OnUseItem.Broadcast(EBulletType::BulletType_Slow);
 }
 
 void ABuffSystemDemoCharacter::BeginTouch(const ETouchIndex::Type FingerIndex, const FVector Location)

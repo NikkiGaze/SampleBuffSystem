@@ -1,7 +1,7 @@
 ﻿#pragma once
 
-UENUM()
-enum EBulletType
+UENUM(BlueprintType)
+enum class EBulletType : uint8
 {
 	BulletType_Burst,
 	BulletType_Damage,

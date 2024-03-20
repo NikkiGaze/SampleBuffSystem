@@ -4,9 +4,11 @@
 
 #include "CoreMinimal.h"
 #include "Components/ActorComponent.h"
+#include "Engine/DataTable.h"
 #include "Enums/BulletTypes.h"
 #include "TP_WeaponComponent.generated.h"
 
+class ABuffSystemDemoProjectile;
 class ABuffSystemDemoCharacter;
 
 UCLASS(Blueprintable, BlueprintType, ClassGroup=(Custom), meta=(BlueprintSpawnableComponent) )
@@ -17,16 +19,19 @@ class BUFFSYSTEMDEMO_API UTP_WeaponComponent : public UActorComponent
 public:
 	/** Projectile class to spawn */
 	UPROPERTY(EditDefaultsOnly, Category=Projectile)
-	TSubclassOf<class ABuffSystemDemoProjectile> Projectile1Class;
+	TSubclassOf<ABuffSystemDemoProjectile> Projectile1Class;
 
 	/** Projectile class to spawn */
 	UPROPERTY(EditDefaultsOnly, Category=Projectile)
-	TSubclassOf<class ABuffSystemDemoProjectile> Projectile2Class;
+	TSubclassOf<ABuffSystemDemoProjectile> Projectile2Class;
 
 	/** Projectile class to spawn */
 	UPROPERTY(EditDefaultsOnly, Category=Projectile)
-	TSubclassOf<class ABuffSystemDemoProjectile> Projectile3Class;
+	TSubclassOf<ABuffSystemDemoProjectile> Projectile3Class;
 
+	UPROPERTY(EditDefaultsOnly, Category=BulletType)
+	UDataTable* BuffsDataTable;
+	
 	/** Sound to play each time we fire */
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category=Gameplay)
 	USoundBase* FireSound;
@@ -54,9 +59,9 @@ protected:
 	/** Ends gameplay for this component. */
 	UFUNCTION()
 	virtual void EndPlay(const EEndPlayReason::Type EndPlayReason) override;
-		
 
 private:
 	/** The Character holding this weapon*/
+	UPROPERTY()
 	ABuffSystemDemoCharacter* Character;
 };
