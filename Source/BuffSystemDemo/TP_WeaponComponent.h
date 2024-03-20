@@ -18,18 +18,18 @@ class BUFFSYSTEMDEMO_API UTP_WeaponComponent : public UActorComponent
 
 public:
 	/** Projectile class to spawn */
-	UPROPERTY(EditDefaultsOnly, Category=Projectile)
+	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category=Projectile)
 	TSubclassOf<ABuffSystemDemoProjectile> Projectile1Class;
 
 	/** Projectile class to spawn */
-	UPROPERTY(EditDefaultsOnly, Category=Projectile)
+	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category=Projectile)
 	TSubclassOf<ABuffSystemDemoProjectile> Projectile2Class;
 
 	/** Projectile class to spawn */
-	UPROPERTY(EditDefaultsOnly, Category=Projectile)
+	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category=Projectile)
 	TSubclassOf<ABuffSystemDemoProjectile> Projectile3Class;
 
-	UPROPERTY(EditDefaultsOnly, Category=BulletType)
+	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category=BulletTable)
 	UDataTable* BuffsDataTable;
 	
 	/** Sound to play each time we fire */

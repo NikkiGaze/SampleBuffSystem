@@ -53,7 +53,6 @@ void ABuffSystemDemoProjectile::OnHit(UPrimitiveComponent* HitComp, AActor* Othe
 
 	for (AActor *DamagedCharacter : OutActors)
 	{
-		DrawDebugSphere(GetWorld(), DamagedCharacter->GetActorLocation(), 100, 12, FColor::Blue, false, 10.0f);
 		if (auto EnemyCharacter = Cast<ATP_ThirdPersonCharacter>(DamagedCharacter))
 		{
 			EnemyCharacter->ApplyBuff(BuffDescriptor);

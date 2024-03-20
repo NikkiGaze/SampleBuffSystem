@@ -71,5 +71,20 @@ void ATP_ThirdPersonCharacter::Tick(float DeltaSeconds)
 
 void ATP_ThirdPersonCharacter::ApplyBuff(const FBuffDescriptor &BuffDescriptor)
 {
-	UNiagaraFunctionLibrary::SpawnSystemAtLocation(GetWorld(), BuffDescriptor.Effect, GetActorLocation());
+	if (IsValid(BuffDescriptor.BuffClass))
+	{
+		ABuffActorBase *BuffActor = GetWorld()->SpawnActor<ABuffActorBase>(BuffDescriptor.BuffClass, GetTransform());
+		BuffActor->AttachToActor(this, FAttachmentTransformRules::SnapToTargetIncludingScale);
+		BuffActor->Init(BuffDescriptor);
+	}	
+}
+
+void ATP_ThirdPersonCharacter::TakeDamage(int Damage)
+{
+	Health -= Damage;
+
+	if (Health <= 0)
+	{
+		Destroy();
+	}
 }

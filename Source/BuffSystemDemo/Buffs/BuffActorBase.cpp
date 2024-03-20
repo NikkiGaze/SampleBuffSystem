@@ -3,24 +3,8 @@
 
 #include "BuffActorBase.h"
 
+#include "BuffDescriptor.h"
 
-// Sets default values
-ABuffActorBase::ABuffActorBase()
+void ABuffActorBase::Init(const FBuffDescriptor Descriptor)
 {
-	// Set this actor to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
-	PrimaryActorTick.bCanEverTick = true;
 }
-
-// Called when the game starts or when spawned
-void ABuffActorBase::BeginPlay()
-{
-	Super::BeginPlay();
-	
-}
-
-// Called every frame
-void ABuffActorBase::Tick(float DeltaTime)
-{
-	Super::Tick(DeltaTime);
-}
-

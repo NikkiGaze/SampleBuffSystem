@@ -3,24 +3,54 @@
 
 #include "BurstBuffActor.h"
 
+#include "BuffDescriptor.h"
+#include "NiagaraFunctionLibrary.h"
+#include "NiagaraComponent.h"
+#include "BuffSystemDemo/TP_ThirdPerson/TP_ThirdPersonCharacter.h"
+
 
 // Sets default values
 ABurstBuffActor::ABurstBuffActor()
 {
-	// Set this actor to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
-	PrimaryActorTick.bCanEverTick = true;
+	RootComponent = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("Root"));
 }
 
-// Called when the game starts or when spawned
-void ABurstBuffActor::BeginPlay()
+void ABurstBuffActor::EndPlay(const EEndPlayReason::Type EndPlayReason)
 {
-	Super::BeginPlay();
+	Super::EndPlay(EndPlayReason);
+
+	GetWorldTimerManager().ClearTimer(TimerHandle);
+	Effect->GetSystemInstanceController()->Deactivate();
+}
+
+void ABurstBuffActor::Init(const FBuffDescriptor Descriptor)
+{
+	Value = Descriptor.Value;
+	Duration = Descriptor.Duration;
+	CurrentTickCount = 0;
+	
+	GetWorldTimerManager().SetTimer(TimerHandle, this, &ABurstBuffActor::OnTimer,
+		1.f, true);
+	
+	Effect = UNiagaraFunctionLibrary::SpawnSystemAttached(Descriptor.Effect, GetRootComponent(), FName(""),
+		 FVector(0, 0, 0), FRotator(0, 0, 0), EAttachLocation::SnapToTarget, true);
+}
+
+void ABurstBuffActor::OnTimer()
+{
+	if (ATP_ThirdPersonCharacter *OwningCharacter = Cast<ATP_ThirdPersonCharacter>(GetAttachParentActor()))
+	{
+		OwningCharacter->TakeDamage(static_cast<int>(Value));
+	}
+	
+	// CurrentTickCount++;
+	// if (CurrentTickCount == Duration)
+	// {
+	// 	GetWorldTimerManager().ClearTimer(TimerHandle);
+	// 	Destroy();
+	// }
 	
 }
 
-// Called every frame
-void ABurstBuffActor::Tick(float DeltaTime)
-{
-	Super::Tick(DeltaTime);
-}
+
 

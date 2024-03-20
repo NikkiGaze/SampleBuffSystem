@@ -4,6 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "BuffActorBase.h"
+#include "BuffDescriptor.h"
 #include "BurstBuffActor.generated.h"
 
 UCLASS()
@@ -15,11 +16,26 @@ public:
 	// Sets default values for this actor's properties
 	ABurstBuffActor();
 
-protected:
-	// Called when the game starts or when spawned
-	virtual void BeginPlay() override;
+	virtual void EndPlay(const EEndPlayReason::Type EndPlayReason) override;
 
-public:
-	// Called every frame
-	virtual void Tick(float DeltaTime) override;
+protected:
+	virtual void Init(const FBuffDescriptor Descriptor) override;
+	
+private:
+	void OnTimer();
+	
+	UPROPERTY()
+	float Value;
+
+	UPROPERTY()
+	int Duration;
+
+	UPROPERTY()
+	UNiagaraComponent *Effect;
+
+	UPROPERTY()
+	int CurrentTickCount;
+
+	UPROPERTY()
+	FTimerHandle TimerHandle;
 };

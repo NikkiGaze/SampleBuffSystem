@@ -24,7 +24,7 @@ void UTP_WeaponComponent::Fire(EBulletType BulletType)
 		return;
 	}
 
-	TSubclassOf<class ABuffSystemDemoProjectile> ProjectileClass;
+	TSubclassOf<ABuffSystemDemoProjectile> ProjectileClass;
 	FString BuffRowName;
 	switch (BulletType)
 	{
@@ -58,8 +58,7 @@ void UTP_WeaponComponent::Fire(EBulletType BulletType)
 			ActorSpawnParams.SpawnCollisionHandlingOverride = ESpawnActorCollisionHandlingMethod::AdjustIfPossibleButDontSpawnIfColliding;
 	
 			// Spawn the projectile at the muzzle
-			ABuffSystemDemoProjectile *Projectile =
-				Cast<ABuffSystemDemoProjectile>(World->SpawnActor<ABuffSystemDemoProjectile>(ProjectileClass, SpawnLocation, SpawnRotation, ActorSpawnParams));
+			ABuffSystemDemoProjectile *Projectile = World->SpawnActor<ABuffSystemDemoProjectile>(ProjectileClass, SpawnLocation, SpawnRotation, ActorSpawnParams);
 
 			if (BuffsDataTable)
 			{
