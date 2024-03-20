@@ -16,13 +16,27 @@ UTP_WeaponComponent::UTP_WeaponComponent()
 }
 
 
-void UTP_WeaponComponent::Fire()
+void UTP_WeaponComponent::Fire(EBulletType BulletType)
 {
 	if(Character == nullptr || Character->GetController() == nullptr)
 	{
 		return;
 	}
 
+	TSubclassOf<class ABuffSystemDemoProjectile> ProjectileClass;
+	switch (BulletType)
+	{
+	case BulletType_Burst:
+		ProjectileClass = Projectile1Class;
+		break;
+	case BulletType_Damage:
+		ProjectileClass = Projectile2Class;
+		break;
+	case BulletType_Slow:
+		ProjectileClass = Projectile3Class;
+		break;
+	default: ;
+	}
 	// Try and fire a projectile
 	if (ProjectileClass != nullptr)
 	{

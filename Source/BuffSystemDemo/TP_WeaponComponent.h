@@ -4,6 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "Components/ActorComponent.h"
+#include "Enums/BulletTypes.h"
 #include "TP_WeaponComponent.generated.h"
 
 class ABuffSystemDemoCharacter;
@@ -16,7 +17,15 @@ class BUFFSYSTEMDEMO_API UTP_WeaponComponent : public UActorComponent
 public:
 	/** Projectile class to spawn */
 	UPROPERTY(EditDefaultsOnly, Category=Projectile)
-	TSubclassOf<class ABuffSystemDemoProjectile> ProjectileClass;
+	TSubclassOf<class ABuffSystemDemoProjectile> Projectile1Class;
+
+	/** Projectile class to spawn */
+	UPROPERTY(EditDefaultsOnly, Category=Projectile)
+	TSubclassOf<class ABuffSystemDemoProjectile> Projectile2Class;
+
+	/** Projectile class to spawn */
+	UPROPERTY(EditDefaultsOnly, Category=Projectile)
+	TSubclassOf<class ABuffSystemDemoProjectile> Projectile3Class;
 
 	/** Sound to play each time we fire */
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category=Gameplay)
@@ -39,7 +48,7 @@ public:
 
 	/** Make the weapon Fire a Projectile */
 	UFUNCTION(BlueprintCallable, Category="Weapon")
-	void Fire();
+	void Fire(EBulletType BulletType);
 
 protected:
 	/** Ends gameplay for this component. */

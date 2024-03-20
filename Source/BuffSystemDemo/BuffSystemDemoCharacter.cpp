@@ -56,7 +56,9 @@ void ABuffSystemDemoCharacter::SetupPlayerInputComponent(class UInputComponent* 
 	PlayerInputComponent->BindAction("Jump", IE_Released, this, &ACharacter::StopJumping);
 
 	// Bind fire event
-	PlayerInputComponent->BindAction("PrimaryAction", IE_Pressed, this, &ABuffSystemDemoCharacter::OnPrimaryAction);
+	PlayerInputComponent->BindAction("Shoot1", IE_Pressed, this, &ABuffSystemDemoCharacter::OnShoot1);
+	PlayerInputComponent->BindAction("Shoot2", IE_Pressed, this, &ABuffSystemDemoCharacter::OnShoot2);
+	PlayerInputComponent->BindAction("Shoot3", IE_Pressed, this, &ABuffSystemDemoCharacter::OnShoot3);
 
 	// Enable touchscreen input
 	EnableTouchscreenMovement(PlayerInputComponent);
@@ -74,26 +76,35 @@ void ABuffSystemDemoCharacter::SetupPlayerInputComponent(class UInputComponent* 
 	PlayerInputComponent->BindAxis("Look Up / Down Gamepad", this, &ABuffSystemDemoCharacter::LookUpAtRate);
 }
 
-void ABuffSystemDemoCharacter::OnPrimaryAction()
+void ABuffSystemDemoCharacter::OnShoot1()
 {
-	// Trigger the OnItemUsed Event
-	OnUseItem.Broadcast();
+	OnUseItem.Broadcast(BulletType_Burst);
+}
+
+void ABuffSystemDemoCharacter::OnShoot3()
+{
+	OnUseItem.Broadcast(BulletType_Damage);
+}
+
+void ABuffSystemDemoCharacter::OnShoot2()
+{
+	OnUseItem.Broadcast(BulletType_Slow);
 }
 
 void ABuffSystemDemoCharacter::BeginTouch(const ETouchIndex::Type FingerIndex, const FVector Location)
 {
-	if (TouchItem.bIsPressed == true)
-	{
-		return;
-	}
-	if ((FingerIndex == TouchItem.FingerIndex) && (TouchItem.bMoved == false))
-	{
-		OnPrimaryAction();
-	}
-	TouchItem.bIsPressed = true;
-	TouchItem.FingerIndex = FingerIndex;
-	TouchItem.Location = Location;
-	TouchItem.bMoved = false;
+	// if (TouchItem.bIsPressed == true)
+	// {
+	// 	return;
+	// }
+	// if ((FingerIndex == TouchItem.FingerIndex) && (TouchItem.bMoved == false))
+	// {
+	// 	OnPrimaryAction();
+	// }
+	// TouchItem.bIsPressed = true;
+	// TouchItem.FingerIndex = FingerIndex;
+	// TouchItem.Location = Location;
+	// TouchItem.bMoved = false;
 }
 
 void ABuffSystemDemoCharacter::EndTouch(const ETouchIndex::Type FingerIndex, const FVector Location)

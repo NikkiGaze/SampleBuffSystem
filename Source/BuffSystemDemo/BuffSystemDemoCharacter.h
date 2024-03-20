@@ -3,6 +3,7 @@
 #pragma once
 
 #include "CoreMinimal.h"
+#include "Enums/BulletTypes.h"
 #include "GameFramework/Character.h"
 #include "BuffSystemDemoCharacter.generated.h"
 
@@ -15,7 +16,7 @@ class USoundBase;
 
 // Declaration of the delegate that will be called when the Primary Action is triggered
 // It is declared as dynamic so it can be accessed also in Blueprints
-DECLARE_DYNAMIC_MULTICAST_DELEGATE(FOnUseItem);
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FOnUseItem, EBulletType, BulletType);
 
 UCLASS(config=Game)
 class ABuffSystemDemoCharacter : public ACharacter
@@ -34,7 +35,7 @@ public:
 	ABuffSystemDemoCharacter();
 
 protected:
-	virtual void BeginPlay();
+	virtual void BeginPlay() override;
 
 public:
 	/** Base turn rate, in deg/sec. Other scaling may affect final turn rate. */
@@ -47,7 +48,9 @@ public:
 protected:
 	
 	/** Fires a projectile. */
-	void OnPrimaryAction();
+	void OnShoot1();
+	void OnShoot2();
+	void OnShoot3();
 
 	/** Handles moving forward/backward */
 	void MoveForward(float Val);
