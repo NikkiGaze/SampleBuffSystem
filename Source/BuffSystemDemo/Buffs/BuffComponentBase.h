@@ -4,13 +4,12 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/Actor.h"
-#include "BuffActorBase.generated.h"
+#include "BuffComponentBase.generated.h"
 
-class UNiagaraSystem;
 struct FBuffDescriptor;
 
 UCLASS()
-class BUFFSYSTEMDEMO_API ABuffActorBase : public AActor
+class BUFFSYSTEMDEMO_API UABuffComponentBase : public USceneComponent
 {
 	GENERATED_BODY()
 

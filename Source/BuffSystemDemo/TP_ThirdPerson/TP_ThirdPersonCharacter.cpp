@@ -73,9 +73,14 @@ void ATP_ThirdPersonCharacter::ApplyBuff(const FBuffDescriptor &BuffDescriptor)
 {
 	if (IsValid(BuffDescriptor.BuffClass))
 	{
-		ABuffActorBase *BuffActor = GetWorld()->SpawnActor<ABuffActorBase>(BuffDescriptor.BuffClass, GetTransform());
-		BuffActor->AttachToActor(this, FAttachmentTransformRules::SnapToTargetIncludingScale);
-		BuffActor->Init(BuffDescriptor);
+		UABuffComponentBase* BuffComponent = NewObject<UABuffComponentBase>(this, BuffDescriptor.BuffClass, "BuffComponent");
+		if (BuffComponent)
+		{
+			BuffComponent->RegisterComponent();
+			BuffComponent->AttachToComponent(GetRootComponent(), FAttachmentTransformRules::SnapToTargetIncludingScale);
+		}
+
+		BuffComponent->Init(BuffDescriptor);
 	}	
 }
 

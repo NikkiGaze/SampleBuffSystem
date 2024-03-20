@@ -2,7 +2,7 @@
 
 #pragma once
 #include "BuffSystemDemo/Enums/BulletTypes.h"
-#include "BuffSystemDemo/Buffs/BuffActorBase.h"
+#include "BuffComponentBase.h"
 #include "Engine/DataTable.h"
 
 #include "NiagaraSystem.h"
@@ -26,7 +26,7 @@ struct FBuffDescriptor : public FTableRowBase
 	float Duration;
 
 	UPROPERTY(BlueprintReadWrite, EditAnywhere)
-	TSubclassOf<ABuffActorBase> BuffClass;
+	TSubclassOf<UABuffComponentBase> BuffClass;
 	
 	UPROPERTY(BlueprintReadWrite, EditAnywhere)
 	UNiagaraSystem *Effect;

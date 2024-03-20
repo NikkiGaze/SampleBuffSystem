@@ -3,18 +3,18 @@
 #pragma once
 
 #include "CoreMinimal.h"
-#include "BuffActorBase.h"
+#include "BuffComponentBase.h"
 #include "BuffDescriptor.h"
-#include "BurstBuffActor.generated.h"
+#include "BurstBuffComponent.generated.h"
 
 UCLASS()
-class BUFFSYSTEMDEMO_API ABurstBuffActor : public ABuffActorBase
+class BUFFSYSTEMDEMO_API UABurstBuffComponent : public UABuffComponentBase
 {
 	GENERATED_BODY()
 
 public:
 	// Sets default values for this actor's properties
-	ABurstBuffActor();
+	// UABurstBuffComponent();
 
 	virtual void EndPlay(const EEndPlayReason::Type EndPlayReason) override;
 
