@@ -73,7 +73,7 @@ void ATP_ThirdPersonCharacter::ApplyBuff(const FBuffDescriptor &BuffDescriptor)
 {
 	if (IsValid(BuffDescriptor.BuffClass))
 	{
-		UABuffComponentBase* BuffComponent = NewObject<UABuffComponentBase>(this, BuffDescriptor.BuffClass, "BuffComponent");
+		UABuffComponentBase* BuffComponent = NewObject<UABuffComponentBase>(this, BuffDescriptor.BuffClass);
 		if (BuffComponent)
 		{
 			BuffComponent->RegisterComponent();

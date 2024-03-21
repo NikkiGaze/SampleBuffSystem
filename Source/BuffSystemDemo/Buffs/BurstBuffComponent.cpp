@@ -5,21 +5,16 @@
 
 #include "BuffDescriptor.h"
 #include "NiagaraFunctionLibrary.h"
+#include "NiagaraComponent.h"
+
 #include "BuffSystemDemo/TP_ThirdPerson/TP_ThirdPersonCharacter.h"
-
-
-// // Sets default values
-// UABurstBuffComponent::UABurstBuffComponent()
-// {
-// 	RootComponent = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("Root"));
-// }
 
 void UABurstBuffComponent::EndPlay(const EEndPlayReason::Type EndPlayReason)
 {
 	Super::EndPlay(EndPlayReason);
 
 	GetWorld()->GetTimerManager().ClearTimer(TimerHandle);
-	// Effect->GetSystemInstanceController()->Deactivate();
+	Effect->GetSystemInstanceController()->Deactivate();
 }
 
 void UABurstBuffComponent::Init(const FBuffDescriptor Descriptor)
@@ -42,13 +37,12 @@ void UABurstBuffComponent::OnTimer()
 		OwningCharacter->TakeDamage(static_cast<int>(Value));
 	}
 	
-	// CurrentTickCount++;
-	// if (CurrentTickCount == Duration)
-	// {
-	// 	GetWorldTimerManager().ClearTimer(TimerHandle);
-	// 	Destroy();
-	// }
-	
+	CurrentTickCount++;
+	if (CurrentTickCount == Duration)
+	{
+		GetWorld()->GetTimerManager().ClearTimer(TimerHandle);
+		DestroyComponent();
+	}	
 }
 
 

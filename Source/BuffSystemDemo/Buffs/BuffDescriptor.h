@@ -23,7 +23,7 @@ struct FBuffDescriptor : public FTableRowBase
 	float Value;
 	
 	UPROPERTY(BlueprintReadWrite, EditAnywhere)
-	float Duration;
+	int Duration;
 
 	UPROPERTY(BlueprintReadWrite, EditAnywhere)
 	TSubclassOf<UABuffComponentBase> BuffClass;

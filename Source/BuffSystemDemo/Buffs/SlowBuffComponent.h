@@ -4,11 +4,13 @@
 
 #include "CoreMinimal.h"
 #include "BuffComponentBase.h"
-#include "BuffDescriptor.h"
-#include "BurstBuffComponent.generated.h"
+#include "SlowBuffComponent.generated.h"
+
+
+class UNiagaraComponent;
 
 UCLASS(ClassGroup=(Custom), meta=(BlueprintSpawnableComponent))
-class BUFFSYSTEMDEMO_API UABurstBuffComponent : public UABuffComponentBase
+class BUFFSYSTEMDEMO_API USlowBuffComponent : public UABuffComponentBase
 {
 	GENERATED_BODY()
 
@@ -25,13 +27,7 @@ private:
 	float Value;
 
 	UPROPERTY()
-	int Duration;
-
-	UPROPERTY()
 	UNiagaraComponent *Effect;
-
-	UPROPERTY()
-	int CurrentTickCount;
 
 	UPROPERTY()
 	FTimerHandle TimerHandle;

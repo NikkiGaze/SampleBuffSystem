@@ -39,7 +39,7 @@ public:
 
 private:	
 	UPROPERTY(BlueprintReadWrite, EditAnywhere, meta = (AllowPrivateAccess = true));
-	float ExplosionRadius = 50.f;
+	float ExplosionRadius = 150.f;
 
 	UPROPERTY()
 	FBuffDescriptor BuffDescriptor;
